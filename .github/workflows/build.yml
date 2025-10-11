@@ -1,4 +1,4 @@
-name: Build Native Modules
+name: 🏗️ Build Native Modules
 
 on:
   push:

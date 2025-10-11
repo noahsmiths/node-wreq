@@ -1,4 +1,4 @@
-name: Test
+name: 🧪 Test
 
 on:
   push:
@@ -48,6 +48,15 @@ jobs:
 
       - name: Build Rust module
         run: npm run build:rust
+
+      - name: Debug - List built files
+        shell: bash
+        run: |
+          echo "=== Files in rust/ ==="
+          ls -la rust/*.node || echo "No .node files in rust/"
+          echo ""
+          echo "=== Node platform info ==="
+          node -e "console.log('Platform:', process.platform, 'Arch:', process.arch)"
 
       - name: Build TypeScript
         run: npm run build:ts
