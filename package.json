@@ -28,8 +28,8 @@
     "web-scraper",
     "wreq",
     "ja3",
-    "tls-fingerprint",
-    "ja4",
+    "tls-fingerprint", 
+    "ja4", 
     "browser-fingerprint-bypass"
   ],
   "author": "will-work-for-meal",
@@ -44,7 +44,7 @@
   "homepage": "https://github.com/will-work-for-meal/node-wreq#readme",
   "devDependencies": {
     "@napi-rs/cli": "^2.18.0",
-    "@types/node": "^20.19.27",
+    "@types/node": "^20.0.0",
     "prettier": "^3.2.5",
     "rimraf": "^6.0.1",
     "typescript": "^5.0.0"
