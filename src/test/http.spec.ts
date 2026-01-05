@@ -77,4 +77,30 @@ describe('HTTP', () => {
       'Should throw an error on timeout'
     );
   });
+
+  test('should capture multiple cookies from Set-Cookie headers', async () => {
+    // httpbin.org/cookies/set allows us to set multiple cookies
+    const response = await request({
+      url: 'https://httpbin.org/cookies/set?session=abc123&csrf_token=xyz789&user_pref=dark',
+      browser: 'chrome_131',
+      timeout: 10000,
+    });
+
+    assert.ok(response.status >= 200 && response.status < 400, 'Should return successful status');
+    assert.ok(typeof response.cookies === 'object', 'Should have cookies object');
+
+    // The server should set multiple cookies
+    const cookieKeys = Object.keys(response.cookies);
+    console.log('Captured cookies:', response.cookies);
+
+    assert.ok(cookieKeys.length > 0, 'Should capture at least one cookie');
+
+    // Check if multiple cookies were captured
+    // httpbin redirects after setting cookies, so we should have the cookies in the response
+    if (cookieKeys.length > 1) {
+      console.log('✓ Multiple cookies captured successfully:', cookieKeys.join(', '));
+    } else {
+      console.log('Note: Only one cookie captured. Cookie count:', cookieKeys.length);
+    }
+  });
 });

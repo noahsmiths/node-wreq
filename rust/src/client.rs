@@ -91,11 +91,13 @@ pub async fn make_request(options: RequestOptions) -> Result<Response> {
 
     // Extract cookies
     let mut cookies = HashMap::new();
-    if let Some(cookie_header) = response.headers().get("set-cookie") {
+    for cookie_header in response.headers().get_all("set-cookie") {
         if let Ok(cookie_str) = cookie_header.to_str() {
-            // Simple cookie parsing (name=value)
-            for cookie_part in cookie_str.split(';') {
-                if let Some((key, value)) = cookie_part.trim().split_once('=') {
+            // Each Set-Cookie header contains one cookie
+            // Format: name=value; attribute1; attribute2=value2; ...
+            // We only care about the first part (name=value)
+            if let Some(name_value_part) = cookie_str.split(';').next() {
+                if let Some((key, value)) = name_value_part.trim().split_once('=') {
                     cookies.insert(key.to_string(), value.to_string());
                 }
             }
